@@ -1,0 +1,84 @@
+html, body {
+  height: 100%;
+  background-color: black;
+}
+
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      height: 20;
+         }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px}
+    
+    /* Set black background color and 100% height */
+    .sidenav {
+      margin:0;
+      padding-top: 20px;
+      background-color: #000000;
+      height: 100%;
+      border: medium gray solid;
+   
+    }
+    
+    /* Set red background color, white text and some padding */
+    footer {
+      background-color: #CC3333;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    
+    .navbar-custom {
+    color: #FFFFFF;
+    background-color: #CC3333;
+}
+
+
+  
+
+
+#wrap {
+  min-height: 100%;
+  padding:0px;
+  margin:0px;
+  border: thin blue solid;
+}
+
+#main {
+  overflow:auto;
+  width:100%;
+  padding:0px;
+  margin:0px;
+  padding-bottom:50px; /* this needs to be bigger than footer height*/
+  border: thin purple solid;
+}
+
+.footer {
+  position: relative;
+  margin-top: -55px; /* negative value of footer height */
+  height: 50px;
+  clear:both;
+  padding-top:15px;
+} 
+
+.reduced {
+    height:450px;
+    width:600px;
+}
+.themePill {
+    background-color: #222222;
+}
+.addpadd {
+    padding:20px;
+}
