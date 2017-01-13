@@ -1,25 +1,41 @@
 html, body {
   height: 100%;
-  background-color: black;
+  background-color: white;
+  color: #0D4D4B;
+}
+
+a {
+    color:#FFD0AA;
+}
+a:hover {
+    color:#0D4D4B;
+}
+
+.sidenav > a {
+    color:#0D4D4B;
+}
+
+.sidenav > a:hover {
+    color:#FFD0AA;
 }
 
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
-      height: 20;
+      
          }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
     .row.content {height: 550px}
     
-    /* Set black background color and 100% height */
+    /* Set white background color and 100% height */
     .sidenav {
       margin:0;
       padding-top: 20px;
-      background-color: #000000;
+      background-color: #ffffff;
       height: 100%;
-      border: medium gray solid;
+      
    
     }
     
@@ -40,19 +56,30 @@ html, body {
     }
     
     .navbar-custom {
-    color: #FFFFFF;
-    background-color: #CC3333;
+    color: #FFD0AA;
+    background-color: #003432;
+    font-size: 1em; 
+    font-family: verdana, sans-serif;
+        text-transform: uppercase;
 }
 
+.name-header{
+    background-color: #0D4D4B;
+    width:100%;
+    font-size:4em;
+    font-family:fantasy;
+    font-weight:bolder;
+    margin:0px;
+    
+}
 
-  
 
 
 #wrap {
   min-height: 100%;
   padding:0px;
   margin:0px;
-  border: thin blue solid;
+  
 }
 
 #main {
@@ -61,7 +88,7 @@ html, body {
   padding:0px;
   margin:0px;
   padding-bottom:50px; /* this needs to be bigger than footer height*/
-  border: thin purple solid;
+  
 }
 
 .footer {
@@ -77,8 +104,15 @@ html, body {
     width:600px;
 }
 .themePill {
-    background-color: #222222;
+    background-color: FFD0AA;
 }
 .addpadd {
     padding:20px;
+}
+.navbar-custom.img {
+    margin-top:10px;
+    margin-bottom:0px;
+}
+.undoUpper {
+    text-transform:none;
 }
