@@ -44,7 +44,7 @@ include("view/header.php");?>
     <label class="equalwidth">Zip:&nbsp; &nbsp;&nbsp; &nbsp;</label><input type="text" id="txtZip" name="txtZip" size="10"><br>
     <input type="submit" value="Place Order"><br>
     
-</form> 
+</form> <button onClick="window.location='cart.php'">Return to Cart</button>
 </div>
         </div>
         </div>
