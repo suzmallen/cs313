@@ -56,8 +56,7 @@
   </div>
 </div><br><br>
 
-<footer class="container-fluid text-center">
-  <p>Online Store Sample</p> 
-</footer>
-
-</body>
+<?php
+include('view/footer.php');
+  
+?>

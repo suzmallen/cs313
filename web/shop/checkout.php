@@ -48,4 +48,7 @@ include("view/header.php");?>
 </div>
         </div>
         </div>
-
+<?php
+include('view/footer.php');
+  
+?>

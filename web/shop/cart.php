@@ -59,3 +59,7 @@ if (isset($_GET['action'])) {
     <br><br><button onClick="window.location='checkout.php'">Check Out</button><div><br><br><a href="index.php">Return to Store</a></div>
     </div>
 
+<?php
+include('view/footer.php');
+  
+?>
