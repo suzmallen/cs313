@@ -6,18 +6,22 @@ include("view/header.php");
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
     if ($action == 'remove') {
-        $id = $_GET['id'];
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_STRING);
         unset($_SESSION['cart'][$id]); //remove the item from the cart
+        header("Location:cart.php");
+        exit;
+        
     }
     if ($action == 'add') {
-        $id = $_GET['id'];
-        $product = $_GET['product'];
-        $price = $_GET['price'];
+        $id = filter_input(INPUT_POST,'id',FILTER_SANITIZE_STRING);
+        $product = filter_input(INPUT_POST,'product',FILTER_SANITIZE_STRING);
+        $price = filter_input(INPUT_POST,'price',FILTER_SANITIZE_STRING);
     
         $_SESSION['cart'][$id]['product'] = $product;
         $_SESSION['cart'][$id]['price'] = $price;
         $_SESSION['cart'][$id]['id'] = $id;
-    
+        header("Location:cart.php");
+        exit;
     }
     
     
@@ -46,7 +50,9 @@ if (isset($_GET['action'])) {
                                      $totalprice = $totalprice + $curprice;
                                      setlocale(LC_MONETARY, 'en_US');
                                      printf("$%01.2f", $curprice); ?></td>
-     <td><button onClick="window.location='cart.php?action=remove&id=<?php echo $productinfo['id']; ?>'">Remove</button></td></tr>
+     <td><form action="cart.php?action=remove" method="post">
+         <input type="text" value="<?php echo $productinfo['id'];?>" name="id" hidden="hidden">
+         <input type=submit value="Remove"></form> </td></tr>
          <?php   
         }
          

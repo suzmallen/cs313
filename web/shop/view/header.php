@@ -36,8 +36,7 @@ if (empty($_SESSION['loginName'])) {
             
          } 
     else{
-        
-                 $_SESSION['loggedid']=TRUE;
+    
                 $_SESSION['loginName']=$login;
             //create the shopping cart
             $_SESSION['cart'] = array();
@@ -115,6 +114,7 @@ td:second {
       <ul class="nav navbar-nav navbar-right">
         
         <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+          <li><a href="logout.php">Logout</a></li>
       </ul>
     </div>
   </div>
