@@ -2,6 +2,9 @@
 
 <?php
 
+//create session variable that holds the current fair that is being viewed
+
+
 // default Heroku Postgres configuration URL
 $dbUrl = getenv('DATABASE_URL');
 
@@ -100,7 +103,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Book Fair Admin - <?php    
+                <a class="navbar-brand" href="index.php">Book Fair Admin - <?php    
                                   echo $rows[0]['description']; ?>
             </a></div>
             <!-- /.navbar-header -->
