@@ -11,11 +11,21 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link href="css/main.css" rel="stylesheet" type="text/css" >
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Suzy Allen Home Page</title>
-        
-
+        <title>Suzy Allen Assignments</title>
+    <style>
+        .bluelink {
+            color:cadetblue;
+        }
+        .center {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+}
+        </style>
 </head>
-<body>
+
+       
+    <body>
 <nav class="navbar navbar-inverse">
   <div class="container-fluid navbar-custom">
     <div class="navbar-header navbar-custom">
@@ -32,9 +42,10 @@
           <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="assignments.html">Assignments</a><span class="caret"></span>
           <ul class="dropdown-menu">
-          <li><a href="#">Hello World!</a></li>
-          <li><a href="#">Project Proposal</a></li>
-          <li><a href="#">Future project</a></li>
+          <li><a href="hello_world.php">Hello World!</a></li>
+          <li><a href="team/Week2TA.html">Week 2 Team Activity</a></li>
+              <li><a href="team/Week3TA.html">Week 3 Team Activity</a></li>
+          <li><a href="bookfair/index.php">Project #1</a></li>
         </ul></li>
         <li><a href="#">Portfolio</a></li>
         <li><a href="#">Contact</a></li>
@@ -50,30 +61,23 @@
   </div>
 </nav>
   
-<div class="col-sm-12 sidenav">
+
      
-          <h1 > Assignments       
+          <h1 class="text-center"> Assignments       
   </h1>
-     <ul class="nav nav-pills nav-stacked">
-  <li >
-    Week 2
-    
-    <ul >
-        <li><a href="hello_world.php">Hello World</a></li>
-        <li><a href="team/Week2TA.html">Team Project</a></li>
-      <!--<li><a href="#">Submenu 1-2</a></li>
-      <li><a href="#">Submenu 1-3</a></li>-->
-    </ul>
-  </li>
-  <li>Week 3
-         <ul >
-        <li><a href="team/w3ta.php">Team Activity</a></li>
-        <li><a href="shop/index.php">Week 3 Project (Shopping Cart)</a></li>
-      <!--<li><a href="#">Submenu 1-2</a></li>
-      <li><a href="#">Submenu 1-3</a></li>-->
-    </ul></li>
-  <li>Week 4</li>
-</ul>
+    <div class="span7 center">
+     <table class="table-striped center">
+         <tr><td class="lead"><a class="bluelink" href="hello_world.php">Hello World</a></td></tr>
+        <tr><td class="lead"><a class="bluelink" href="shop/index.php">Week 3 Project (Shopping Cart)</a></td></tr>
+        <tr><td class="lead"><a class="bluelink" href="team/Week2TA.html">Week 2 Team Activity</a></td></tr>
+              <tr><td class="lead"><a class="bluelink" href="team/Week3TA.html">Week 3 Team Activity</a></td></tr>
+          <tr><td class="lead"><a  class="bluelink" href="bookfair/index.php">Project #1</a></td></tr>
+      <!--<tr><td><a href="#">Submenu 1-2</a></td></tr>
+      <tr><td><a href="#">Submenu 1-3</a></td></tr>-->
+    </table>
+  <tr>Week 4</tr>
+
     </div>
+       
     </body>
 </html>

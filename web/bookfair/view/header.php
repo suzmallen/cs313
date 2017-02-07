@@ -121,7 +121,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <ul class="nav" id="side-menu">
                         
                         <li>
-                            <a href="index.php?action=info"><i class="fa fa-dashboard fa-fw"></i> Fair Info</a>
+                            <a href="index.php?action=info"><i class="fa fa-file-text"></i> Fair Info</a>
                         </li>
                         <li>
                             <a href="index.php?action=data&day=1"><i class="fa fa-dollar fa-fw"></i> Daily Financials</a>
