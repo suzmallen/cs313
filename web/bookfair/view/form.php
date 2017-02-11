@@ -17,7 +17,7 @@
                                 <div class="col-lg-6">
                                     <form role="form">
                                         <div class="form-group">
-                                            <label>Text Input</label>
+                                            <label>Book Fair name</label>
                                             <input class="form-control">
                                             <p class="help-block">Example block-level help text here.</p>
                                         </div>

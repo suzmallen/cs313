@@ -31,6 +31,10 @@ $statement = $db->query('SELECT username, password FROM note_user');
 $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
+//to avoid sql injection--------------------------------------
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//------------------------------------------------------------
 $stmt = $db->prepare('SELECT * FROM table WHERE id=:id AND name=:name');
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->bindValue(':name', $name, PDO::PARAM_STR);
@@ -56,5 +60,7 @@ $dbName = ltrim($dbopts["path"],'/');
 
 $db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
 
+//---------------------PAY ATTENTION TO THIS!!!-------------------------------
+$newId = $pdo->lastInsertId('product_id_seq');
 
 ?>

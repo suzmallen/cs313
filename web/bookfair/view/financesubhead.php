@@ -42,7 +42,7 @@ $daycount= $row[0]['num_days'];
                 <td class="fawidth"><?php 
                     if ($daynum > 1) { ?>
                         <a class="navbar-brand" 
-                           href="index.php?action=data&id=<?php echo $myDay['bookfair_id'];?>&day=<?php echo ($myDay['sequence_no']-1);?>" ><i class="fa fa-chevron-circle-left fa-fw vcenter"></i></a>
+                           href="index.php?action=data&id=<?php echo $myDay['bookfair_id'];?>&day=<?php echo ($myDay['sequence_no']-1);?>&task=1" ><i class="fa fa-chevron-circle-left fa-fw vcenter"></i></a>
                     <?php 
                                      }else{
                     echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;                
@@ -59,20 +59,20 @@ $daycount= $row[0]['num_days'];
                     }  ?> </td></tr></table></div>
                
                     <div class="vcenter"><ul class="nav navbar-top-links ">
-                <li><a class="panel panel-green" href="#">
+                <li><a class="panel panel-green" href="index.php?action=data&id=<?php echo $myDay['bookfair_id'];?>&day=<?php echo $myDay['sequence_no'];?>&task=1" >
                         Step 1: Cash
                     </a>
                 </li>
-                <li><a class="panel panel-primary" href="#">
+                <li><a class="panel panel-primary" href="index.php?action=data&id=<?php echo $myDay['bookfair_id'];?>&day=<?php echo $myDay['sequence_no'];?>&task=2">
                         Step 2: Checks
                     </a>
                         
                 </li>
-                <li><a class="panel panel-yellow" href="#">
+                <li><a class="panel panel-yellow" href="index.php?action=data&id=<?php echo $myDay['bookfair_id'];?>&day=<?php echo $myDay['sequence_no'];?>&task=3">
                         Step 3: Register
                     </a>
                 </li>
-                <li><a class="panel panel-red" href="#">
+                <li><a class="panel panel-red" href="index.php?action=data&id=<?php echo $myDay['bookfair_id'];?>&day=<?php echo $myDay['sequence_no'];?>&task=4">
                         Step 4: Verify
                     </a>
                 </li>

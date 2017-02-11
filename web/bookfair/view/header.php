@@ -2,33 +2,7 @@
 
 <?php
 
-//create session variable that holds the current fair that is being viewed
-
-
-// default Heroku Postgres configuration URL
-$dbUrl = getenv('DATABASE_URL');
-
-if (empty($dbUrl)) {
- // example localhost configuration URL with postgres username and a database called cs313db
- $dbUrl = "postgres://Admin:pa55word@localhost:5432/bkFair";
-}
-
-$dbopts = parse_url($dbUrl);
-
-
-$dbHost = $dbopts["host"];
-$dbPort = $dbopts["port"];
-$dbUser = $dbopts["user"];
-$dbPassword = $dbopts["pass"];
-$dbName = ltrim($dbopts["path"],'/');
-
-try {
- $db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
-}
-catch (PDOException $ex) {
- print "<p>error: $ex->getMessage() </p>\n\n";
- die();
-}
+require "model/db.php";
 
 $stmt = $db->prepare('SELECT bookfair.description, bookfairday.bookfair_date, bookfairday.sequence_no, 
                     bookfairday.bookfair_day_id, bookfair.bookfair_id FROM bookfairday INNER JOIN bookfair 
@@ -51,7 +25,12 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="author" content="">
 
     <title>Book Fair Admin</title>
-
+     <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <!-- for the datepicker -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -131,7 +110,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($rows as $row) {
                                         ?>
                                 <li>
-                                    <a href="index.php?action=data&day=<?php echo $row['sequence_no']; ?>">
+                                    <a href="index.php?action=data&id=<?php echo $row['bookfair_id']; ?>&day=<?php echo $row['sequence_no']; ?>">
                                         <?php echo date('m/d/y',strtotime($row['bookfair_date'])); ?></a>
                                 </li>
                                 <?php } ?>

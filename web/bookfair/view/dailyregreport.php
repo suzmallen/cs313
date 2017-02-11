@@ -22,42 +22,17 @@ $dimes = $bookfairday['dime_count'];
 $nickels = $bookfairday['nickel_count'];
 $pennies = $bookfairday['penny_count'];
 $totalcoins = (.25 * $quarters) + (.10 * $dimes) + (.05 * $nickels) + (.01 * $pennies);
-
-$other = $bookfairday['ns_total'];
-$ones = $bookfairday['one_count'];
-$fives = $bookfairday['five_count'];    
-$tens = $bookfairday['ten_count'];
-$twenties = $bookfairday['twenty_count'];
-$fifties = $bookfairday['fifty_count'];
-$totalbills = $other + (1.00 * $ones) + (5.00 * $fives) + (10.00 * $tens) + (20.00 * $twenties) + (50.00 * $fifties);
     
 $total = $totalbills + $totalcoins;    
 
-updateactualcash($bookfairdayid,$total,$db);
+
 
 ?>
 
 
-
-<script>
-        function removedates()
-        {   alert("button clicked!");
-           var values = $('#dates').val();
-         for( var i=0; i < values.length ; i++){
-             alert(values[i]);
-         }
-         
-        }
-    
-    function adddate()
-    {
-        alert("button clicked!");
-    }
-</script>            
-
 <div class="row">
                 <div class="col-lg-8">
-                    <h3 class="page-header">Step 1: Enter Cash</h3>
+                    <h3 class="page-header">Step 3: Enter Register Reports</h3>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

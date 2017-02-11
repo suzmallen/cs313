@@ -27,13 +27,38 @@ switch ($action) {
         if ($daynum == NULL) {
             $daynum=1;
         }
-
-        include('view/financesubhead.php');
-        include ('view/enterdaily.php');
+        $task = filter_input(INPUT_GET, 'task');
+        if ($task == NULL) {
+            $task=1;
+        }
+        switch ($task) {
+            case 1:
+                include('view/financesubhead.php');
+                include ('view/enterdaily.php');
+                break;
+            case 2:
+                include('view/financesubhead.php');
+                include ('view/checks.php');
+                break;
+            case 3:
+                include('view/financesubhead.php');
+                include ('view/dailyregreport.php');
+                break;
+            case 4:
+                include('view/financesubhead.php');
+                include ('view/dailyverify.php');
+                break;
+            default:
+                include('view/financesubhead.php');
+                include ('view/enterdaily.php');
+        }
+        
+        
     break;
     case 'info':
+        include("bookfairdb.php");
         include ('view/fairinfo.php');
-    break;    
+    break; 
     default:
        // include('home-page.php');
 }
@@ -42,22 +67,4 @@ switch ($action) {
 
 
  
-           
-            
-
-    <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-   
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
-
-</body>
-
-</html>
+ 
