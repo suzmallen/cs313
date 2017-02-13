@@ -48,10 +48,10 @@ $(document).ready(function(){
         function(data,status){
             if (data == "success"){
                 alert("update was successful")
-                 $('#totcash').text(totcash);
-                 $('#totcredit').text(totcredit);
+                 $('#totcash').text(totcash.toFixed(2));
+                 $('#totcredit').text(totcredit.toFixed(2));
                  $('#totreceipts').text(totreceipts);
-                 $('#tottotal').text(tottotal);
+                 $('#tottotal').text(tottotal.toFixed(2));
             }else{
                 alert(data);
             }
