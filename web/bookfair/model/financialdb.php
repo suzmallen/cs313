@@ -85,4 +85,19 @@ function adddaychecks($id, $checkno, $amount, $db){
     $stmt->execute();
     
 }
+
+ function updateregnumbers($id,$totcash,$totcredit,$totreceipts,$tottotal, $db){
+     
+    $stmt = $db->prepare('UPDATE bookfairday SET 
+       report_cash_amount = :totcash, report_credit_amount = :totcredit,
+       report_num_receipts = :totreceipts, report_total_sales = :tottotal 
+       WHERE bookfair_day_id = :id');
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':totcash', $totcash, PDO::PARAM_STR);
+     $stmt->bindValue(':totcredit', $totcredit, PDO::PARAM_STR);
+     $stmt->bindValue(':totreceipts', $totreceipts, PDO::PARAM_STR);
+     $stmt->bindValue(':tottotal', $tottotal, PDO::PARAM_INT);
+    $stmt->execute();
+     
+ }
 ?>

@@ -16,19 +16,52 @@ $bookfair = getbookfair($id, $db);
 $bookfairday = getbookfairday($id, $sequence, $db);
 $bookfairdayid = $bookfairday['bookfair_day_id'];
 
-//get the dates for the bookfair associated with the book fair
-$quarters = $bookfairday['quarter_count'];
-$dimes = $bookfairday['dime_count'];
-$nickels = $bookfairday['nickel_count'];
-$pennies = $bookfairday['penny_count'];
-$totalcoins = (.25 * $quarters) + (.10 * $dimes) + (.05 * $nickels) + (.01 * $pennies);
-    
-$total = $totalbills + $totalcoins;    
-
-
 
 ?>
-
+<script>
+    
+    
+$(document).ready(function(){
+    $('#calc').click(function(){
+        var reg1cash = parseFloat($('#reg1cash').val());
+        var reg2cash = parseFloat($('#reg2cash').val());
+        var reg1credit = parseFloat($('#reg1credit').val());
+        var reg2credit = parseFloat($('#reg2credit').val());
+        var reg1receipts = parseInt($('#reg1receipts').val());
+        var reg2receipts = parseInt($('#reg2receipts').val());
+        var reg1total = parseFloat($('#reg1total').val());
+        var reg2total = parseFloat($('#reg2total').val());
+        var totcash = reg1cash + reg2cash;
+        var totcredit = reg1credit + reg2credit;
+        var totreceipts = reg1receipts + reg2receipts;
+        var tottotal = reg1total + reg2total;
+        var currentID = ($('#dayid').val());
+        alert(currentID);
+        $.post("saveregreports.php",
+        {
+          id: currentID,
+          totcash: totcash,
+          totcredit: totcredit,
+          totreceipts: totreceipts,
+          tottotal: tottotal
+             },
+        function(data,status){
+            if (data == "success"){
+                alert("update was successful")
+                 $('#totcash').text(totcash);
+                 $('#totcredit').text(totcredit);
+                 $('#totreceipts').text(totreceipts);
+                 $('#tottotal').text(tottotal);
+            }else{
+                alert(data);
+            }
+            
+        });
+       
+    });  
+});    
+    
+</script>
 
 <div class="row">
                 <div class="col-lg-8">
@@ -41,34 +74,31 @@ $total = $totalbills + $totalcoins;
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Coins
+                            Register #1
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form role="form" action="savecash.php?id=<?php echo $id;?>&day=<?php echo $sequence;?>" method="post" class="form-inline">
+                                    <form class="form-inline">
                                         <div class="form-group">
-                                            <label>Quarters:</label>
-                                            <input type="text" size="4" class="form-control" name="quarters" id="quarters" value="<?php echo $bookfairday['quarter_count'];?>">
-                                        </div><br>
+                                            <label>Total Cash/Checks:</label>
+                                            $<input type="text" size="8" class="form-control" name="reg1cash" id="reg1cash" value="">
+                                        </div>
                                         <div class="form-group">
-                                            <label>Dimes:</label>
-                                            <input type="text" size="4" class="form-control" name="dimes" id="dimes" value="<?php echo $bookfairday['dime_count'];?>">
-                                        </div><br>
+                                            <label>Total Credit:</label>
+                                            $<input type="text" size="8" class="form-control" name="reg1credit" id="reg1credit" value="">
+                                        </div>
                                         <div class="form-group">
-                                            <label>Nickels:</label>
-                                            <input type="text" size="4" class="form-control" name="nickels" id="nickels" value="<?php echo $bookfairday['nickel_count'];?>">
-                                        </div><br>
+                                            <label>Total # Receipts:</label>
+                                            <input type="text" size="4" class="form-control" name="reg1receipts" id="reg1receipts" value="">
+                                        </div>
                                         <div class="form-group">
-                                            <label>Pennies:</label>
-                                            <input type="text" size="4" class="form-control" name="pennies" id="pennies" value="<?php echo $bookfairday['penny_count'];?>">
-                                        </div><br>
-                                        <input type="hidden" name="id" value="<?php echo $bookfairdayid;?>">
+                                            <label>Total Sales:</label>
+                                            $<input type="text" size="8" class="form-control" name="reg1total" id="reg1total" value="">
+                                        </div>
+                                        <input type="hidden" name="dayid" id="dayid" value="<?php echo $bookfairdayid;?>">
                                               
-                                        <label>Save and Calculate</label><input type="submit" id="coin" value="GO">
-                                    </form>
-                                    
-                                        
+                                    </form>                                                                            
                                        
                                 </div>
                                
@@ -83,59 +113,83 @@ $total = $totalbills + $totalcoins;
                                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                           Bills
+                           Register #2
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form role="form" action="savebills.php?id=<?php echo $id;?>&day=<?php echo $sequence;?>" method="post" class="form-inline">
-                                       <div class="form-group">
-                                            <label>$1 Bills:</label>
-                                            <input type="text" size="4" class="form-control" name="ones" id="ones" value="<?php echo $bookfairday['one_count'];?>">
-                                        </div><br>
+                                    <form class="form-inline">
+                                     <div class="form-group">
+                                    <label>Total Cash/Checks:</label>
+                                    $<input type="text" size="8" class="form-control" name="reg2cash" id="reg2cash" value="">
+                                    </div>
+                                
                                         <div class="form-group">
-                                            <label>$5 Bills:</label>
-                                            <input type="text" size="4" class="form-control" name="fives" id="fives" value="<?php echo $bookfairday['five_count'];?>">
-                                        </div><br>
+                                            <label>Total Credit:</label>
+                                            $<input type="text" size="8" class="form-control" name="reg2credit" id="reg2credit" value="">
+                                        </div>
                                         <div class="form-group">
-                                            <label>$10 Bills:</label>
-                                            <input type="text" size="4" class="form-control" name="tens" id="tens" value="<?php echo $bookfairday['ten_count'];?>">
-                                        </div><br>
+                                            <label>Total # Receipts:</label>
+                                            <input type="text" size="4" class="form-control" name="reg2receipts" id="reg2receipts" value="">
+                                        </div>
                                         <div class="form-group">
-                                            <label>$20 Bills:</label>
-                                            <input type="text" size="4" class="form-control" name="twenties" id="twenties" value="<?php echo $bookfairday['twenty_count'];?>">
-                                        </div><br>
-                                        <div class="form-group">
-                                            <label>$50 Bills:</label>
-                                            <input type="text" size="4" class="form-control" name="fifties" id="fifties" value="<?php echo $bookfairday['fifty_count'];?>">
-                                        </div><br>
-                                        <div class="form-group">
-                                            <label>Total amount other Bills/Change:</label><br>
-                                            $<input type="text" size="10" class="form-control" name="nstotal" id="nstotal" placeholder="#.##" value="<?php echo number_format($bookfairday['ns_total'], 2, ".", "," );?>">
-                                        </div><br>
-                                        <input type="hidden" name="id" value="<?php echo $bookfairdayid;?>">
-                                          
-                                        <label>Save and Calculate</label><input type="submit" id="bills" value="GO">
-                                    </form>
-                                    
+                                            <label>Total Sales:</label>
+                                            $<input type="text" size="8" class="form-control" name="reg2total" id="reg2total" value="">
+                                        </div>
                                         
+                                    </form>   
                                        
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                             </div>
                             <!-- /.row (nested) -->
+                        <label>Calculate and Save</label><button type="button" id="calc">GO</button>
+                        </div>
+                                    </div>
+            </div>
+            <!-- /.row -->
+           <!-- /.col-lg-6 (nested) -->
+                                <div class="col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                           Totals:
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form class="form-inline">
+                                     <div class="form-group">
+                                    <label>Total Cash/Checks:</label>
+                                         $<span name="totcash" id="totcash"><?php echo number_format($bookfairday['frcash'], 2, ".", "," );?></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total Credit:</label>
+                                            $<span name="totcredit" id="totcredit"><?php echo number_format($bookfairday['frcredit'], 2, ".", "," );?></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total # Receipts:</label>
+                                            <span name="totreceipts" id="totreceipts"><?php echo $bookfairday['report_num_receipts'];?></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total Sales:</label>
+                                            $<span name="tottotal" id="tottotal"><?php echo number_format($bookfairday['frtotal'], 2, ".", "," );?></span>
+                                        </div>
+                                                                        
+                                        </form>
+                                       
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        
                         </div>
             </div>
             <!-- /.row -->
-    
                 </div>
-                 <div class="col-lg-4">
-                 <label>Total Coins: <?php echo '$'.number_format($totalcoins, 2, ".", "," );?></label><br>
-                <label>Total Bills/other: <?php echo '$'.number_format($totalbills, 2, ".", "," );?></label><br>
-            <label>Total Cash: <?php echo '$'.number_format($total, 2, ".", "," );?></label>
-                </div>
+                
 </div>
-      
+</div>
+</div>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>

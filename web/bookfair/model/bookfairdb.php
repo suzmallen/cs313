@@ -67,7 +67,9 @@ function updatebookfairinfo($id, $description, $school_id, $start_date, $end_dat
 }
 
 function getbookfairday($id, $sequence, $db){
-    $stmt = $db->prepare("SELECT *, non_standard_total::numeric::float8 AS ns_total
+    $stmt = $db->prepare("SELECT *, non_standard_total::numeric::float8 AS ns_total,
+         report_cash_amount::numeric::float8 AS frcash,  report_credit_amount::numeric::float8 AS frcredit,
+          report_total_sales::numeric::float8 AS frtotal
         FROM bookfairday WHERE bookfair_id =  :id and sequence_no = :sequence");
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt->bindValue(':sequence', $sequence, PDO::PARAM_INT);
