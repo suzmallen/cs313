@@ -53,32 +53,42 @@
     </style>
    
     </head><body>
-
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">Enter a User Name and Password</h3>
                     </div>
                     <?php 
                     if (isset($message)){
                         echo $message;
+                    } 
+                     if (isset($errormessage)){
+                        echo $errormessage;
                     } ?>                   
                     
                     <div class="panel-body">
-                        <form role="form" action="index.php?action=login" method="post">
+                        <form role="form" action="index.php?action=addaccount" method="post">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="User Name" name="login" type="text" autofocus>
+                                    <input class="form-control" placeholder="First Name" name="fname" id="fname" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Last Name" name="lname" id="lname" type="text" autofocus>
                                 </div>
-                                <input type="submit" class="btn btn-lg btn-success btn-block" value="Login"/><br>
                                 <div class="form-group">
-                                  <a href="index.php?action=newaccount">Create account</a>
+                                    <input class="form-control" placeholder="User Name" name="username" type="text" autofocus>
                                 </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Enter a Password" name="password" id="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Re-type the Password" name="vpassword" id="vpassword" type="password" value="">
+                                </div>
+                                <div id="divCheckPasswordMatch" style="color:red;"></div>
+                                <input type="submit" class="btn btn-lg btn-success btn-block" value="Create Account"/><br>
+                                
                             </fieldset>
                         </form>
                     </div>
@@ -86,6 +96,23 @@
             </div>
         </div>
     </div>
+<script>
+$(document).ready(function() {
+   $('#password,#vpassword').keyup(checkPasswordsMatch); 
+});
+    
+function checkPasswordsMatch() {
+    var password = $('#password').val();
+    var vpassword = $('#vpassword').val();
+    
+    if (password != confirmPassword){
+        $('#divCheckPasswordMatch').html("Passwords do not match!");
+    }else{
+        $('#divCheckPasswordsMatch').html("Passwords match");
+    }
+    
+}    
+</script>
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>

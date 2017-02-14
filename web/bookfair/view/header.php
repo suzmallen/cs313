@@ -2,6 +2,10 @@
 
 <?php
 
+session_set_cookie_params(0, '/');
+if(!isset($_SESSION)){session_start();}
+
+
 require "model/db.php";
 
 $stmt = $db->prepare('SELECT bookfair.description, bookfairday.bookfair_date, bookfairday.sequence_no, 
@@ -68,6 +72,18 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
    
 </head>
+<?php
+
+if (empty($_SESSION['firstname'])) {
+         include('view/login.php');
+               
+             exit;
+         } else {
+
+$name = $_SESSION['firstname'].' '.$_SESSION['lastname'];
+    
+    ?>
+
 
 <body>
 
@@ -87,6 +103,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </a></div>
             <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-right">
+                <li>Welcome <?php echo $name;?>!</li>
                 <li>
                     <a href="index.php?action=changeid">
                     <i class="fa fa-exchange"> Other Fairs </i>
@@ -128,3 +145,4 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- /.navbar-static-side -->
         </nav>
         <div id="page-wrapper">
+            <?php } ?>

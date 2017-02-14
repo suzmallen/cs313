@@ -81,6 +81,36 @@ function getbookfairday($id, $sequence, $db){
 
 }
 
+function insert_user($first_name,$last_name,$username,$password,$db)
+        {  
+    $query = 'INSERT INTO bookfairuser(user_name, first_name, last_name, password)
+            VALUES (:username, :firstname, :lastname, :password)' ;
+
+    $statement=$db->prepare($query);
+    $statement->bindValue(':username',$username);
+    $statement->bindValue(':firstname',$first_name);
+    $statement->bindValue(':lastname',$last_name);
+    $statement->bindValue(':password',$password);
+    $statement->execute();
+    $result=$statement->rowCount();
+    $statement->closeCursor();
+    return $result;
+}
+
+function login_user($login,$db){
+    $query = 'SELECT * FROM bookfairuser
+              WHERE user_name = :login';    
+    $statement = $db->prepare($query);
+    $statement->bindValue(':login', $login);
+    $statement->execute();    
+    $data = $statement->fetch();
+    $statement->closeCursor();    
+    
+    return $data;
+}
+    
+
+
 //check to make sure the date is a valid date
 function is_date( $str ) {
     if ($str=="") {

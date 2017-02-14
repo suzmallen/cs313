@@ -1,7 +1,7 @@
 <?php
 
 $id=3;
-$userid = 1;
+$userid = 4;
 //Get the book fair data
 $bookfair = getbookfair($id, $db);
 $schools = getschools($userid,$db);
