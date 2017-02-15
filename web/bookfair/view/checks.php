@@ -3,7 +3,6 @@
 require "model/bookfairdb.php";
 require "model/financialdb.php";
 
-$userid = 1;
 
 
 $id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);

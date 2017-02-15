@@ -5,16 +5,7 @@
 session_set_cookie_params(0, '/');
 if(!isset($_SESSION)){session_start();}
 
-
 require "model/db.php";
-
-$stmt = $db->prepare('SELECT bookfair.description, bookfairday.bookfair_date, bookfairday.sequence_no, 
-                    bookfairday.bookfair_day_id, bookfair.bookfair_id FROM bookfairday INNER JOIN bookfair 
-                    oN bookfairday.bookfair_id = bookfair.bookfair_id 
-                    INNer JOIN type on TYPE.type_id = bookfair.fair_type WHERE bookfairday.bookfair_id=3 ORDER BY sequence_no');
-$stmt->execute();
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +71,22 @@ if (empty($_SESSION['firstname'])) {
              exit;
          } else {
 
-$name = $_SESSION['firstname'].' '.$_SESSION['lastname'];
+    
+$bookfairid = $_SESSION['bookfairid'];
+//echo $bookfairid;
+
+
+$stmt = $db->prepare('SELECT b.description, bd.bookfair_date, bd.sequence_no, 
+                    bd.bookfair_day_id, b.bookfair_id FROM bookfair b LEFT OUTER JOIN bookfairday bd
+                    oN bd.bookfair_id = b.bookfair_id 
+                    LEFT OUTER JOIN type on TYPE.type_id = b.fair_type WHERE b.bookfair_id= :id ORDER BY sequence_no');
+$stmt->bindValue(':id', $bookfairid, PDO::PARAM_INT);
+$stmt->execute();
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    
+    
+    $name = $_SESSION['firstname'].' '.$_SESSION['lastname'];
     
     ?>
 
@@ -123,14 +129,15 @@ $name = $_SESSION['firstname'].' '.$_SESSION['lastname'];
                             <a href="index.php?action=data&day=1"><i class="fa fa-dollar fa-fw"></i> Daily Financials</a>
 
                             <ul class="nav nav-second-level">
-                                <?php    
+                                <?php  if (!($rows[0]['sequence_no']==null)){ 
                                     foreach ($rows as $row) {
                                         ?>
                                 <li>
                                     <a href="index.php?action=data&id=<?php echo $row['bookfair_id']; ?>&day=<?php echo $row['sequence_no']; ?>">
                                         <?php echo date('m/d/y',strtotime($row['bookfair_date'])); ?></a>
                                 </li>
-                                <?php } ?>
+                                <?php }
+                                  }  ?>
                                
                             </ul>
                             <!-- /.nav-second-level -->

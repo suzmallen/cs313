@@ -41,12 +41,27 @@ if ($action == NULL) {
 switch ($action) {
         
     case 'home_page':
-        include('view/header.php'); 
+        //echo $_SESSION['bookfairid'];
+        if (!isset($_SESSION['userid'])){
+            include('view/header.php'); 
+        }else if (!isset($_SESSION['bookfairid'])){
+            include('view/manageschools.php');
+        }else{
+            include('view/header.php'); 
+        }
+        
         //include('home-page.php');
     break;
     case 'report':
         include('view/header.php'); 
         include ("view/financialreport.php");
+    break;
+    case 'addfair':
+        include('view/newfair.php'); 
+       
+    break;
+    case 'changeid':
+        include ("view/manageschools.php");
     break;
     case 'data':
         include('view/header.php'); 
@@ -110,6 +125,7 @@ switch ($action) {
                 $_SESSION['loggedin']=TRUE;
                 $_SESSION['firstname']=$data['first_name'];
                 $_SESSION['lastname']=$data['last_name'];
+                $_SESSION['userid'] = $data['user_id'];
                 //go to the default admin page
                 header("Location: .");
                exit;

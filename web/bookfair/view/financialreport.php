@@ -1,5 +1,5 @@
 <?php 
-$id=3;
+$id=$_SESSION['bookfairid'];
 
 $stmt = $db->prepare('SELECT bookfair_date , report_cash_amount::numeric::float8 AS report_cash_amount, 
     report_credit_amount::numeric::float8 AS report_credit_amount,
@@ -7,7 +7,8 @@ $stmt = $db->prepare('SELECT bookfair_date , report_cash_amount::numeric::float8
     actual_cash::numeric::float8 AS actual_cash, actual_checks::numeric::float8 AS actual_checks, 
     actual_other::numeric::float8 AS actual_other,
     (actual_cash+actual_checks+actual_other)::numeric::float8 AS total_cash, 
-    actual_num_receipts FROM bookfairday WHERE bookfair_id=:id');
+    actual_num_receipts FROM bookfairday WHERE bookfair_id=:id
+    ORDER BY bookfair_date');
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);

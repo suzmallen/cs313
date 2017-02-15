@@ -3,7 +3,7 @@
 function getbookfair($id,$db){
     
     $stmt = $db->prepare("SELECT b.*, concat_ws(' ', bu.first_name::text, bu.last_name::text) AS primary_user 
-        FROM bookfair b INNER JOIN bookfairuser bu 
+        FROM bookfair b LEFT OUTER JOIN bookfairuser bu 
         ON bu.user_id = b.primary_user_id where bookfair_id =  :id");
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
@@ -12,6 +12,50 @@ function getbookfair($id,$db){
     
     return $row;
 }
+
+
+function getallschools($db) {
+    
+    $stmt = $db->prepare("SELECT * from school");
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+    return $rows;
+}
+
+
+function addnewbookfair($description, $school_id, $user_id, $start_date, $end_date, $set_up_date, $db){
+    $stmt = $db->prepare('INSERT INTO bookfair (description, school_id, primary_user_id, start_date,
+    end_date, set_up_date) VALUES (:description, :school_id, :userid, :start_date, :end_date, :set_up_date) ');
+    $stmt->bindValue(':userid', $user_id, PDO::PARAM_INT);
+    $stmt->bindValue(':description', $description, PDO::PARAM_STR);
+    $stmt->bindValue(':school_id', $school_id, PDO::PARAM_INT);
+    $stmt->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+    $stmt->bindValue(':end_date', $end_date, PDO::PARAM_STR);
+    $stmt->bindValue(':set_up_date', $set_up_date, PDO::PARAM_STR);
+    $stmt->execute();
+    $result=$stmt->rowCount();
+    $stmt->closeCursor();
+    return $result;
+    
+}
+
+
+
+function getuserbookfairs($id,$db){
+    
+    $stmt = $db->prepare("SELECT b.*, concat_ws(' ', bu.first_name::text, bu.last_name::text) AS current_user,
+        s.school_name
+        FROM bookfairuser bu INNER JOIN userschool us on bu.user_id=us.user_id INNER JOIN bookfair b 
+        ON b.school_id = us.school_id INNER JOIN school s on s.school_id = b.school_id WHERE bu.user_id =  :id
+        ORDER BY s.school_name, b.bookfair_id ");
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+    return $rows;
+}
+
 
 function getschools($id,$db){
     
@@ -96,6 +140,36 @@ function insert_user($first_name,$last_name,$username,$password,$db)
     $statement->closeCursor();
     return $result;
 }
+
+function adduserschool($userid, $schoolid, $db){
+    
+    $query = 'INSERT INTO userschool(user_id, school_id, active)
+            VALUES (:userid, :schoolid, true)' ;
+
+    $statement=$db->prepare($query);
+    $statement->bindValue(':userid',$userid);
+    $statement->bindValue(':schoolid',$schoolid);
+    $statement->execute();
+    $result=$statement->rowCount();
+    $statement->closeCursor();
+    return $result;
+    
+    
+}
+
+function  removeuserschool($userid, $schoolid, $db){
+    $query = 'DELETE FROM userschool WHERE user_id= :userid
+        AND school_id =:schoolid' ;
+
+    $statement=$db->prepare($query);
+    $statement->bindValue(':userid',$userid);
+    $statement->bindValue(':schoolid',$schoolid);
+    $statement->execute();
+    $result=$statement->rowCount();
+    $statement->closeCursor();
+    return $result;
+}
+
 
 function login_user($login,$db){
     $query = 'SELECT * FROM bookfairuser

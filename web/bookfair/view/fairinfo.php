@@ -1,16 +1,14 @@
 <?php
 
-$id=3;
-$userid = 4;
+$id=$_SESSION['bookfairid'];
+$userid = $_SESSION['userid'];
+//echo $id;
 //Get the book fair data
 $bookfair = getbookfair($id, $db);
 $schools = getschools($userid,$db);
 $bookfairdays = getbookfairdays($id, $db);
 
 //get the dates for the bookfair associated with the book fair
-
-
-
 
 ?>
 
@@ -187,7 +185,7 @@ $(document).ready(function(){
                                         <div class="input-group">
                                             <input type="text" name="bookfair_date" id="bookfair_date" class="form-control" placeholder="MM/DD/YYYY"><br>
                                         
-                                        <input type="hidden" id="bookfair_id" name="bookfair_id" value="3"/>
+                                        <input type="hidden" id="bookfair_id" name="bookfair_id" value="<?php echo $bookfairid;?>"/>
                                         
                                         <button id="add">Add Date</button>
                                         </div>

@@ -1,7 +1,7 @@
           
 <?php
 
-$id = 3;
+$id = $_SESSION['bookfairid'];
 
 $stmt = $db->prepare('SELECT bookfair_id, bookfair_date , report_cash_amount::numeric::float8 AS report_cash_amount, 
     report_credit_amount::numeric::float8 AS report_credit_amount,
