@@ -50,6 +50,9 @@ $(document).ready(function(){
         var intSequence = $('#dates option').length + 1;
         var bookfairid = $('#bookfair_id').val();
         var bookfairdate = $('#bookfair_date').val();
+        if (bookfairdate==""){
+            alert("Please enter a date");
+        }else{
         $('#dates').append('<option value="' + bookfairid+ '">' + bookfairdate + '</option>');
         $('#bookfair_date').val("");
         $.post("addDay.php",
@@ -65,7 +68,7 @@ $(document).ready(function(){
                 alert(data);
             }
             
-        });
+        });}
     });
 });
   $( function() {
