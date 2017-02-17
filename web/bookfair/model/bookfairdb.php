@@ -1,13 +1,14 @@
 <?php
 
 function getbookfair($id,$db){
-    
+    //echo "id:".$id;
     $stmt = $db->prepare("SELECT b.*, concat_ws(' ', bu.first_name::text, bu.last_name::text) AS primary_user 
         FROM bookfair b LEFT OUTER JOIN bookfairuser bu 
-        ON bu.user_id = b.primary_user_id where bookfair_id =  :id");
+        ON bu.user_id = b.primary_user_id where b.bookfair_id =  :id");
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    //var_dump($rows);
     $row = $rows[0];
     
     return $row;
@@ -90,6 +91,15 @@ function addbookfairday($id, $date, $sequence, $db){
     
 }
 
+function countbookfairdays($id, $db){
+    $stmt2 = $db->prepare('SELECT Count(*) as num_days FROM bookfairday WHERE bookfair_id=:id');
+    $stmt2->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt2->execute();
+    $row = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+    $daycount= $row[0]['num_days'];
+    return $daycount;
+}
+
 function deletebookfairday($id, $db){
     $stmt = $db->prepare('delete from bookfairday where bookfair_day_id= :id');
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -113,7 +123,8 @@ function updatebookfairinfo($id, $description, $school_id, $start_date, $end_dat
 function getbookfairday($id, $sequence, $db){
     $stmt = $db->prepare("SELECT *, non_standard_total::numeric::float8 AS ns_total,
          report_cash_amount::numeric::float8 AS frcash,  report_credit_amount::numeric::float8 AS frcredit,
-          report_total_sales::numeric::float8 AS frtotal
+          report_total_sales::numeric::float8 AS frtotal,
+          initial_balance::numeric::float8 AS initial_balance
         FROM bookfairday WHERE bookfair_id =  :id and sequence_no = :sequence");
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     $stmt->bindValue(':sequence', $sequence, PDO::PARAM_INT);

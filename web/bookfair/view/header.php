@@ -77,7 +77,7 @@ $bookfairid = $_SESSION['bookfairid'];
 
 
 $stmt = $db->prepare('SELECT b.description, bd.bookfair_date, bd.sequence_no, 
-                    bd.bookfair_day_id, b.bookfair_id FROM bookfair b LEFT OUTER JOIN bookfairday bd
+                    bd.bookfair_day_id, b.bookfair_id, bd.complete FROM bookfair b LEFT OUTER JOIN bookfairday bd
                     oN bd.bookfair_id = b.bookfair_id 
                     LEFT OUTER JOIN type on TYPE.type_id = b.fair_type WHERE b.bookfair_id= :id ORDER BY sequence_no');
 $stmt->bindValue(':id', $bookfairid, PDO::PARAM_INT);
@@ -126,15 +126,17 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <a href="index.php?action=info"><i class="fa fa-file-text"></i> Fair Info</a>
                         </li>
                         <li>
-                            <a href="index.php?action=data&day=1"><i class="fa fa-dollar fa-fw"></i> Daily Financials</a>
+                            <a href="index.php?action=data&id=<?php echo $bookfairid;?>&day=1"><i class="fa fa-dollar fa-fw"></i> Daily Financials</a>
 
                             <ul class="nav nav-second-level">
                                 <?php  if (!($rows[0]['sequence_no']==null)){ 
                                     foreach ($rows as $row) {
                                         ?>
                                 <li>
-                                    <a href="index.php?action=data&id=<?php echo $row['bookfair_id']; ?>&day=<?php echo $row['sequence_no']; ?>">
-                                        <?php echo date('m/d/y',strtotime($row['bookfair_date'])); ?></a>
+                                    <a href="index.php?action=data&id=<?php echo $row['bookfair_id']; ?>&day=<?php echo $row['sequence_no']; ?>"><?php if ($row['complete'] == true){
+                                        echo "<span class='glyphicon glyphicon-ok text-danger'> </span>";
+                                        }
+                                        echo date('m/d/y',strtotime($row['bookfair_date'])); ?></a>
                                 </li>
                                 <?php }
                                   }  ?>

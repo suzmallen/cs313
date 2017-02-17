@@ -19,6 +19,76 @@ function updatecoins($id, $quarters, $dimes, $nickels, $pennies, $db){
 
 }
 
+function updateinitbalance($id, $dayid, $initbalance, $db){
+    if ($id==0) {
+         $stmt2 = $db->prepare('UPDATE bookfairday SET 
+        initial_balance = :initbalance
+        WHERE bookfair_day_id = :dayid');
+    $stmt2->bindValue(':dayid', $dayid, PDO::PARAM_INT);
+    $stmt2->bindValue(':initbalance', $initbalance, PDO::PARAM_STR);
+    $stmt2->execute();
+    $result=$stmt2->rowCount();
+    $stmt2->closeCursor();
+    return $result;
+        
+    }else{
+    
+     $stmt = $db->prepare('SELECT sequence_no FROM bookfairday
+        WHERE bookfair_day_id = :dayid');
+    $stmt->bindValue(':dayid', $dayid, PDO::PARAM_INT);
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sequence_no = $rows[0]['sequence_no'];
+    
+    $nextsequence_no = $sequence_no + 1;
+    //echo $sequence_no;
+    //echo $nextsequence_no;
+     $stmt2 = $db->prepare('UPDATE bookfairday SET 
+        initial_balance = :initbalance
+        WHERE bookfair_id = :id AND sequence_no = :sequence_no');
+    $stmt2->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt2->bindValue(':sequence_no', $nextsequence_no, PDO::PARAM_INT);
+    $stmt2->bindValue(':initbalance', $initbalance, PDO::PARAM_STR);
+    $stmt2->execute();
+    $result=$stmt2->rowCount();
+    $stmt2->closeCursor();
+    return $result;
+    }
+    
+}
+
+
+function getdailyfinancialinfo($bookfairdayid, $db){
+    $stmt = $db->prepare('SELECT bookfair_date , report_cash_amount::numeric::float8 AS report_cash_amount, 
+    report_credit_amount::numeric::float8 AS report_credit_amount,
+    report_num_receipts, report_total_sales::numeric::float8 AS report_total_sales, 
+    actual_cash::numeric::float8 AS actual_cash, actual_checks::numeric::float8 AS actual_checks, 
+    actual_other::numeric::float8 AS actual_other,
+    (actual_cash+actual_checks+actual_other)::numeric::float8 AS total_cash, 
+    actual_num_receipts, initial_balance::numeric::float8 AS initial_balance, bookfair_day_id,
+    complete FROM bookfairday 
+    WHERE bookfair_day_id=:id
+    ');
+$stmt->bindValue(':id', $bookfairdayid, PDO::PARAM_INT);
+$stmt->execute();
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+
+function updatecomplete($dayid, $db){
+    $stmt2 = $db->prepare('UPDATE bookfairday SET 
+        complete = true
+        WHERE bookfair_day_id = :dayid ');
+    $stmt2->bindValue(':dayid', $dayid, PDO::PARAM_INT);
+    $stmt2->execute();
+    $result=$stmt2->rowCount();
+    $stmt2->closeCursor();
+    return $result;
+    
+}
+
+
+
 function updatebills($id, $ones, $fives, $tens, $twenties, $fifties, $nstotal, $db)
 {
     $stmt = $db->prepare('UPDATE bookfairday SET 

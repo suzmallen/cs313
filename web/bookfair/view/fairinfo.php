@@ -22,7 +22,7 @@ $(document).ready(function(){
         var currentID = 0;
         var values = $('#dates').val();
          for( var i=0; i < values.length ; i++){
-             alert(values[i]);
+             //alert(values[i]);
              currentID = values[i]
              $.post("deleteDay.php",
         {

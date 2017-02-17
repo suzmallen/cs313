@@ -1,7 +1,14 @@
           
 <?php
+require "model/bookfairdb.php";
 
 $id = $_SESSION['bookfairid'];
+
+$daycount = countbookfairdays($id, $db);
+if ( $daycount == '0') {
+    echo "<h3>No Book Fair Days have been entered.</h3><h4>Please add Book Fair Days under the 'Fair Info' section.</h4>";
+}else{
+
 
 $stmt = $db->prepare('SELECT bookfair_id, bookfair_date , report_cash_amount::numeric::float8 AS report_cash_amount, 
     report_credit_amount::numeric::float8 AS report_credit_amount,
@@ -9,19 +16,14 @@ $stmt = $db->prepare('SELECT bookfair_id, bookfair_date , report_cash_amount::nu
     actual_cash::numeric::float8 AS actual_cash, actual_checks::numeric::float8 AS actual_checks, 
     actual_other::numeric::float8 AS actual_other,
     (actual_cash+actual_checks+actual_other)::numeric::float8 AS total_cash, 
-    actual_num_receipts, sequence_no::numeric AS sequence_no FROM bookfairday WHERE bookfair_id=:id and sequence_no=:daynum');
+    actual_num_receipts, sequence_no::numeric AS sequence_no, bookfair_day_id FROM bookfairday WHERE bookfair_id=:id and sequence_no=:daynum');
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->bindValue(':daynum', $daynum, PDO::PARAM_INT);
 $stmt->execute();
 $dayrows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $myDay= $dayrows[0];
 $daynum = $myDay['sequence_no'];
-
-$stmt2 = $db->prepare('SELECT Count(*) as num_days FROM bookfairday WHERE bookfair_id=:id');
-$stmt2->bindValue(':id', $id, PDO::PARAM_INT);
-$stmt2->execute();
-$row = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-$daycount= $row[0]['num_days'];
+$bookfairdayid = $myDay['bookfair_day_id'];
 
         ?>
              
@@ -37,7 +39,7 @@ $daycount= $row[0]['num_days'];
                
             </div>
             <!-- /.navbar-header -->
-                
+              
             <div class="vcenter"><table><tr >
                 <td class="fawidth"><?php 
                     if ($daynum > 1) { ?>
@@ -82,4 +84,4 @@ $daycount= $row[0]['num_days'];
             </ul></div>
             <!-- /.navbar-top-links -->
         </nav>
-            
+        <?php } ?>    

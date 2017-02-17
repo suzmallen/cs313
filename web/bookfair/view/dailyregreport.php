@@ -1,12 +1,12 @@
 <?php
 //require "model/db.php";
-require "model/bookfairdb.php";
+
 require "model/financialdb.php";
 
-$userid = 1;
+$userid = $_SESSION['userid'];
 
 
-$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+$id = $_SESSION['bookfairid'];
 $sequence= filter_input(INPUT_GET, 'day',FILTER_VALIDATE_INT);
 
 
@@ -71,8 +71,46 @@ $(document).ready(function(){
             </div>
             <!-- /.row -->
             <div class="row">
+                                            <div class="col-lg-3">
+                    <div class="panel panel-default panel-yellow">
+                        <div class="panel-heading">
+                           Totals:
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form class="form-inline">
+                                     <div class="form-group">
+                                    <label>Total Cash/Checks:</label>
+                                         $<span name="totcash" id="totcash"><?php echo number_format($bookfairday['frcash'], 2, ".", "," );?></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total Credit:</label>
+                                            $<span name="totcredit" id="totcredit"><?php echo number_format($bookfairday['frcredit'], 2, ".", "," );?></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total # Receipts:</label>
+                                            <span name="totreceipts" id="totreceipts"><?php echo $bookfairday['report_num_receipts'];?></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total Sales:</label>
+                                            $<span name="tottotal" id="tottotal"><?php echo number_format($bookfairday['frtotal'], 2, ".", "," );?></span>
+                                        </div>
+                                                                        
+                                        </form>
+                                       
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        
+                        </div>
+            </div>
+            <!-- /.row -->
+                </div>
+                
                 <div class="col-lg-4">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-yellow">
                         <div class="panel-heading">
                             Register #1
                         </div>
@@ -111,7 +149,7 @@ $(document).ready(function(){
                 </div>
                 <!-- /.col-lg-6 --> <!-- /.col-lg-6 (nested) -->
                                 <div class="col-lg-4">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-yellow">
                         <div class="panel-heading">
                            Register #2
                         </div>
@@ -149,43 +187,7 @@ $(document).ready(function(){
             </div>
             <!-- /.row -->
            <!-- /.col-lg-6 (nested) -->
-                                <div class="col-lg-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                           Totals:
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <form class="form-inline">
-                                     <div class="form-group">
-                                    <label>Total Cash/Checks:</label>
-                                         $<span name="totcash" id="totcash"><?php echo number_format($bookfairday['frcash'], 2, ".", "," );?></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Total Credit:</label>
-                                            $<span name="totcredit" id="totcredit"><?php echo number_format($bookfairday['frcredit'], 2, ".", "," );?></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Total # Receipts:</label>
-                                            <span name="totreceipts" id="totreceipts"><?php echo $bookfairday['report_num_receipts'];?></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Total Sales:</label>
-                                            $<span name="tottotal" id="tottotal"><?php echo number_format($bookfairday['frtotal'], 2, ".", "," );?></span>
-                                        </div>
-                                                                        
-                                        </form>
-                                       
-                                </div>
-                                <!-- /.col-lg-6 (nested) -->
-                            </div>
-                            <!-- /.row (nested) -->
-                        
-                        </div>
-            </div>
-            <!-- /.row -->
-                </div>
+
                 
 </div>
 </div>

@@ -1,6 +1,6 @@
 <?php
 //require "model/db.php";
-require "model/bookfairdb.php";
+
 require "model/financialdb.php";
 
 
@@ -60,8 +60,8 @@ $(document).ready(function(){
             <!-- /.row -->
             <div class="row">
                  <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
+                <div class="col-lg-4">
+                    <div class="panel panel-default panel-primary">
                         <div class="panel-heading">
                             Checks
                         </div>
@@ -113,8 +113,8 @@ $(document).ready(function(){
                 <!-- /.col-lg-6 -->
             
                  <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
+                <div class="col-lg-4">
+                    <div class="panel panel-default panel-primary">
                         <div class="panel-heading">
                             Checks
                         </div>

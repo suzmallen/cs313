@@ -1,17 +1,20 @@
 <?php
 //require "model/db.php";
-require "model/bookfairdb.php";
+
 require "model/financialdb.php";
 
 $userid = $_SESSION['userid'];
 
-
-$id = filter_input(INPUT_GET, 'id',FILTER_VALIDATE_INT);
+$id =$_SESSION['bookfairid'];
 $sequence= filter_input(INPUT_GET, 'day',FILTER_VALIDATE_INT);
-
 
 //Get the book fair data
 $bookfair = getbookfair($id, $db);
+
+$daycount = countbookfairdays($id, $db);
+if ( $daycount == '0') {
+    echo "";
+}else{
 
 $bookfairday = getbookfairday($id, $sequence, $db);
 $bookfairdayid = $bookfairday['bookfair_day_id'];
@@ -32,6 +35,7 @@ $fifties = $bookfairday['fifty_count'];
 $totalbills = $other + (1.00 * $ones) + (5.00 * $fives) + (10.00 * $tens) + (20.00 * $twenties) + (50.00 * $fifties);
     
 $total = $totalbills + $totalcoins;    
+$initialbalance = $bookfairday['initial_balance'];    
 
 updateactualcash($bookfairdayid,$total,$db);
 
@@ -39,20 +43,29 @@ updateactualcash($bookfairdayid,$total,$db);
 
 
 
-<script>
-        function removedates()
-        {   alert("button clicked!");
-           var values = $('#dates').val();
-         for( var i=0; i < values.length ; i++){
-             alert(values[i]);
-         }
-         
-        }
-    
-    function adddate()
-    {
-        alert("button clicked!");
-    }
+<script>$(document).ready(function(){
+
+    $('#saveinitbalance').click(function(){
+        var dayid = $('#dayid').val();
+        //alert(dayid);
+        var initialbalance = $('#initialbalance').val();
+        $.post("updateinitbalance.php",
+        {   id:0,
+            dayid: dayid,
+          initialbalance: initialbalance     
+             },
+        function(data,status){
+            if (data == "success"){
+                
+            }else{
+                alert(data);
+            }
+            
+        });
+          
+              
+    });
+});
 </script>            
 
 <div class="row">
@@ -64,7 +77,7 @@ updateactualcash($bookfairdayid,$total,$db);
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-green">
                         <div class="panel-heading">
                             Coins
                         </div>
@@ -106,7 +119,7 @@ updateactualcash($bookfairdayid,$total,$db);
                 </div>
                 <!-- /.col-lg-6 --> <!-- /.col-lg-6 (nested) -->
                                 <div class="col-lg-4">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default panel-green">
                         <div class="panel-heading">
                            Bills
                         </div>
@@ -155,11 +168,23 @@ updateactualcash($bookfairdayid,$total,$db);
     
                 </div>
                  <div class="col-lg-4">
+                     <div class="panel panel-default panel-green">
+                        <div class="panel-heading">
+                           Summary
+                        </div>
+                         
+                        <div class="panel-body">
                  <label>Total Coins: <?php echo '$'.number_format($totalcoins, 2, ".", "," );?></label><br>
                 <label>Total Bills/other: <?php echo '$'.number_format($totalbills, 2, ".", "," );?></label><br>
             <label>Total Cash: <?php echo '$'.number_format($total, 2, ".", "," );?></label>
                 </div>
-</div>
+                         <div class="panel-body">
+                         <label>Initial Balance:</label>
+                             $<input id="initialbalance" name="initialbalance" value="<?php echo number_format($initialbalance, 2, ".", "," );?>"><input type="button" id="saveinitbalance" value="Update">
+                              <input type="hidden" id="dayid" name="dayid" value="<?php echo $bookfairdayid;?>">
+                         </div>
+                     </div></div></div>
+<?php } ?>
       
 
     <!-- Bootstrap Core JavaScript -->
