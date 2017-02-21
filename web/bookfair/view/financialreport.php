@@ -2,7 +2,7 @@
 require "model/financialdb.php";
 $id=$_SESSION['bookfairid'];
 
-$rows = getdailyfinancialinfo($id, $db);
+$rows = getalldailyfinancialinfo($id, $db);
 
 ?>
 <h1>Final Financial Report</h1>

@@ -75,6 +75,24 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $rows;
 }
 
+
+function getalldailyfinancialinfo($bookfairid, $db){
+    $stmt = $db->prepare('SELECT bookfair_date , report_cash_amount::numeric::float8 AS report_cash_amount, 
+    report_credit_amount::numeric::float8 AS report_credit_amount,
+    report_num_receipts, report_total_sales::numeric::float8 AS report_total_sales, 
+    actual_cash::numeric::float8 AS actual_cash, actual_checks::numeric::float8 AS actual_checks, 
+    actual_other::numeric::float8 AS actual_other,
+    (actual_cash+actual_checks+actual_other)::numeric::float8 AS total_cash, 
+    actual_num_receipts, initial_balance::numeric::float8 AS initial_balance, bookfair_day_id,
+    complete FROM bookfairday 
+    WHERE bookfair_id=:id ORDER BY bookfair_date
+    ');
+$stmt->bindValue(':id', $bookfairid, PDO::PARAM_INT);
+$stmt->execute();
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+
 function updatecomplete($dayid, $db){
     $stmt2 = $db->prepare('UPDATE bookfairday SET 
         complete = true
